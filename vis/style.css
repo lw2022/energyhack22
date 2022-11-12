@@ -20,6 +20,16 @@ body {
     font-family: 'Raleway', sans-serif;
 }
 
+img {
+    max-width: 100%;
+    height: auto;
+    position: relative;
+}
+
+h4 {
+    max-width: 100%;
+}
+
 .section{
     text-align:center;
     padding-left:4%;
@@ -27,27 +37,13 @@ body {
     padding-bottom: 3%;
 }
 
-#section1{
-    height: 50px;
-    padding-top: 15vh;
-    padding-bottom: 15vh;
-    padding-right: 20vh;
-    padding-left: 20vh;
-    background-color:#a6dbca;
-    opacity: 60%;
-    color: black;
-    text-align: center;
-}
-
-#section2{
+#topSection{
     height: 100%;
     padding-top:5vh;
     padding-bottom: 5vh;
     padding-right: 20vh;
     padding-left: 20vh;
-    background-color:#a6dbca;
-    opacity: 60%;
-    color: black;
+    /* color: black; */
     text-align: center;
 }
 

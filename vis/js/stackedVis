@@ -7,23 +7,71 @@ class StackedVis {
         this.parentElement = parentElement;
         this.data = _data;
         this.displayData = [];
-
         this.initVis()
     }
 
     initVis() {
         let vis = this;
+        console.log(vis.data);
 
         // set the dimensions and margins of the graph
-        vis.margin = {top: 10, right: 30, bottom: 100, left: 60};
-        vis.width = 800 - vis.margin.left - vis.margin.right;
-        vis.height = 450 - vis.margin.top - vis.margin.bottom;
-
+        var margin = {top: 60, right: 230, bottom: 50, left: 50},
+            width = 660 - margin.left - margin.right,
+            height = 400 - margin.top - margin.bottom;
+        
         // append the svg object to the body of the page
-        vis.svg = d3.select("#stackedVis")
-            .append("svg")
-            .attr("width", vis.width + vis.margin.left + vis.margin.right)
-            .attr("height", vis.height + vis.margin.top + vis.margin.bottom)
-            .append("g")
+        var svg = d3.select("#my_dataviz")
+          .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+          .append("g")
             .attr("transform",
-                "translate(" + vis.margin.left + "," + vis.margin.top + ")");
+                  "translate(" + margin.left + "," + margin.top + ")");
+
+        
+        d3.csv("data.csv", function(data) {
+            // List of groups = header of the csv files
+            var keys = data.columns.slice(1)
+
+            // color palette
+            var color = d3.scaleOrdinal()
+                .domain(keys)
+                .range(d3.schemeSet2);
+
+            //stack the data?
+            var stackedData = d3.stack()
+                .keys(keys)(data)
+
+            // Add X axis
+            var x = d3.scaleLinear()
+                .domain(d3.extent(data, function(d) { return d.year; }))
+                .range([ 0, width ]);
+            var xAxis = svg.append("g")
+                .attr("transform", "translate(0," + height + ")")
+                .call(d3.axisBottom(x).ticks(5))
+
+            // Add X axis label:
+            svg.append("text")
+                .attr("text-anchor", "end")
+                .attr("x", width)
+                .attr("y", height+40 )
+                .text("Time (year)");
+
+            // Add Y axis label:
+            svg.append("text")
+                .attr("text-anchor", "end")
+                .attr("x", 0)
+                .attr("y", -20 )
+                .text("# of baby born")
+                .attr("text-anchor", "start")
+
+            // Add Y axis
+            var y = d3.scaleLinear()
+            .domain([0, 2])
+            .range([ height, 0 ]);
+            svg.append("g")
+            .call(d3.axisLeft(y).ticks(5))
+        }
+
+        
+    }

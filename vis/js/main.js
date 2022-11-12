@@ -1,6 +1,6 @@
 let stackedVis;
 
-let csv = "fakedata.csv";
+let csv = "data.csv";
 
 // read csv data from data folder
 d3.csv(csv).then(csvData => {
