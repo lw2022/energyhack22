@@ -11,7 +11,12 @@ CORS(app)
 # Serve home route
 @app.route("/")
 def home():
-    return Flask.send_from_directory(app.static_folder,'index.html')
+    return send_from_directory(app.static_folder,'index.html')
+
+# Balance demand
+@app.route("/balance", methds=["GET"])
+def milp():
+    return NotImplementedError
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=True)
