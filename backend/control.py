@@ -2,7 +2,7 @@ import numpy as np
 
 
 class Appliance:
-  def __init__(self, applianceName, maxEnergyUse, priority) :
+  def __init__(self, applianceName, maxEnergyUse, priority):
     self.applianceName = applianceName
     self.currentEnergyUse = maxEnergyUse
     self.maxEnergyUse = maxEnergyUse
@@ -13,7 +13,7 @@ class Appliance:
 
 class EvCharger(Appliance):
   def __init__(self, applianceName, maxEnergyUse, priority):
-    Appliance.__init__(applianceName, maxEnergyUse, priority)
+    super().__init__(applianceName, maxEnergyUse, priority)
 
     # other needed attributes:
     # startingChargeTime
@@ -140,21 +140,46 @@ class Controller():
 
     stateVars = []
     actionVars = []
+    appList = []
     # state and action variables
-    for t in range(0, self._horizon, self._dt):
-      for app in appliances:
+    for app in appliances:
+      for t in range(0, self._horizon-1, self._dt):
         stateVars.append((app.applianceName, t, 'state'))
         actionVars.append((app.applianceName, t, 'action'))
 
+        appList.append(app.applianceName)
+      stateVars.append((app.applianceName, self._horizon-1, 'state'))
 
 
     m = ConcreteModel()
-    for app in appliances:
-      name = app.applianceName
-      m.
+    m.bounds = ConstraintList()
+    for appName in appList:
+      if appName=='EvCharger':
+        vars = [var for var in stateVars if var[0]==appName]
+        m.varsEvState = Set(initialize=vars)
+        m.EvChargerState = Var(m.varsEvState)
+
+        vars = [var for var in actionVars if var[0]==appName]
+        m.varsEvAction = Set(initialize=vars)
+        m.EvChargerAction = Var(m.varsEvAction)
+
+        for t in range(0, self._horizon-1, self._dt):
+          m.bounds.add(m.varsEvAction['EvCharger', t, 'action'] <= 5)
+          m.bounds.add(m.varsEvAction['EvCharger', t, 'action'] >= 0)
     # m.
     # m.vars = Set(initialize = vars)
     # m.w = Var(m.vars, domain=Binary)    # indexing is (id, q, r, s, time, layer)
 
+    # time evolution
+    m.sim = ConstraintList()
+    
+    for i in range(0, self._horizon-1, self._dt):
+      # EV simulation
+      m.sim.add(m.varsEvState['EvCharger', t+1, 'state'] == m.varsEvState['EvCharger', t, 'action'] + chargeCoeff * m.varsEvAction['EvCharger', t, 'action'] * self._dt)
+      
+
+
+
+    print(m.pprint())
 
     return
