@@ -47,49 +47,26 @@ h4 {
     text-align: center;
 }
 
-#section3{
+#stackedVis{
     height: 100%;
     padding-top:5vh;
     padding-bottom: 5vh;
     padding-right: 20vh;
     padding-left: 20vh;
-    background-color:#9cc9e5;
-    opacity: 60%;
-    color: black;
-    text-align: center;
-}
-#section4{
-    height: 100%;
-    padding-top:5vh;
-    padding-bottom: 5vh;
-    padding-right: 20vh;
-    padding-left: 20vh;
-    background-color:#bfb9dd;
-    opacity: 60%;
-    color: black;
-    text-align: center;
 }
 
-#section5{
-    height: 100%;
-    padding-top:5vh;
-    padding-bottom: 5vh;
-    padding-right: 20vh;
-    padding-left: 20vh;
-    background-color:#E6F598;
-    opacity: 60%;
-    color: black;
-    text-align: center;
+#applianceLeft{
+    text-align: left;
 }
 
-#section6{
-    height: 100%;
-    padding-top:5vh;
-    padding-bottom: 5vh;
-    padding-right: 20vh;
-    padding-left: 20vh;
-    background-color:peachpuff;
-    opacity: 60%;
-    color: black;
-    text-align: center;
+#applianceRight{
+    text-align: right;
+}
+
+#imageLeft {
+    float: left;
+}
+
+#imageRight {
+    float: right;
 }

@@ -1,11 +1,11 @@
 let stackedVis;
 
-let csv = "data.csv";
+let csv = "data/epriData.csv";
 
 // read csv data from data folder
-d3.csv(csv).then(csvData => {
-    console.log(csvData)
-    createVis(csvData)
+d3.csv("data/epriData.csv", function(data){
+    console.log(data);
+    createVis(data);
 });
 
 function createVis(data){

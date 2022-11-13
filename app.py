@@ -14,7 +14,7 @@ def home():
     return send_from_directory(app.static_folder,'index.html')
 
 # Balance demand
-@app.route("/balance", methds=["GET"])
+@app.route("/balance", methods=["GET"])
 def milp():
     return NotImplementedError
 
