@@ -61,16 +61,16 @@ class StackedVis {
             .attr("text-anchor", "end")
             .attr("x", vis.width/2 +80)
             .attr("y", vis.height+40 )
-            .text("Time (hour ending)");
+            .text("Time of day (hour ending)");
 
         // Add Y axis label:
         vis.svg.append("text")
             .attr("text-anchor", "end")
             .attr("x", 3)
-            .attr("dx", "-15em")
+            .attr("dx", "-13em")
             .attr("y", 6)
             .attr("dy", "-2.5em")
-            .text("Energy Consumption (Amps)")
+            .text("Current Draw (A)")
             .attr("transform", "rotate(-90)")
             .attr("text-anchor", "start")
 
