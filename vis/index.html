@@ -27,10 +27,10 @@
                     <a class="navbar-brand" href="#">Navigation</a>
                     <ul class="nav nav-pills">
                       <li class="nav-item">
-                        <a class="nav-link" href="#scrollspyHeading1">Optimization Vis</a>
+                        <a class="nav-link" href="#scrollspyHeading1">Stacked Load Vis</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#scrollspyHeading2">Appliances</a>
+                        <a class="nav-link" href="#scrollspyHeading2">Consumption Constraints</a>
                       </li>
                       <li class="nav-item">
                         <a class="nav-link" href="#scrollspyHeading3">Solutions</a>
@@ -38,46 +38,115 @@
 
                     </ul>
                 </nav>
+                <br>
                 <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="scrollspy-example" tabindex="0">
                     <div class="section" id="stacked">
-                        <h4 id="scrollspyHeading1">Visualization</h4>
+                        <h4 id="scrollspyHeading1">Household Day Current Draw</h4>
+                        <h6>Hover over the legend to see the energy use profiles of specific appliances, click and drag a section of the chart to brush and zoom in on a particular time frame.</h6>
+
                         <div class="col d-flex justify-content-center text-center">
                             <div id="stackedVis"></div>
                         </div>
                     </div>
                 </div>
-                <br>
-                <br>
+
             </div>
             
-            <div class="section" id="applicances">
+            <!-- <div class="section" id="applicances">
                 <h4 id="scrollspyHeading2">Appliance Consumption</h4>
 
                 <div id="applianceLeft imageLeft">
                     <h5>Heating + AC</h5>
-                    <img src="images/hvac.jpeg" style="width: 400px; height:400px"/>
+                    <img src="images/hvac.jpeg" style="width: 200px; height:200px"/>
 
                     <h5>Heat Pump</h5>
-                    <img src="images/waterHeater.png" style="width: 400px; height:400px" />
+                    <img src="images/waterHeater.png" style="width: 200px; height:200px"/>
                     
                     <h5>Dishwasher</h5>
-                    <img src="images/dishwasher.jpeg"style="width: 400px; height:400px"/>
+                    <img src="images/dishwasher.jpeg"style="width: 200px; height:200px"/>
 
                     <h5>Oven</h5>
-                    <img src="images/oven.png" style="width: 400px; height:400px"/>
+                    <img src="images/oven.png" style="width: 200px; height:200px"/>
 
                     <h5>Washer and Dryer</h5>
-                    <img src="images/washer.jpeg" style="width: 400px; height:400px"/>
+                    <img src="images/washer.jpeg" style="width: 200px; height:200px"/>
 
                     <h5>EV Charging</h5>
-                    <img src="images/charge.jpeg" style="width: 400px; height:400px"/>
+                    <img src="images/charge.jpeg" style="width: 200px; height:200px"/>
 
 
+                </div> -->
+
+                <br>
+                <br>
+                <div style="text-align: left;">
+                    <h3 id="scrollspyHeading2">Consumption Constraints</h3>
+                    <br>
+                    <h5>Gradient Consumption</h5>
+                    <h6>Electric Vehicle Charging</h6>
+                    <ul>
+                        <li>The vehicle should be 80% charged by the time the customer needs to leave</li>
+                        <li>50 kWh battery, charger provides max 5 kW</li>    
+                    </ul>
+                    <h6>Water Heating</h6>
+                    <ul>
+                        <li>There should be enough hot water in the tank to support usual peak water usage (ML potential)</li>
+                        <li>More hot water is penalized</li>    
+                    </ul>
+                    <h6>AC (Heat Pump)</h6>
+                    <ul>
+                        <li>There is a range of acceptable temperatures</li>
+                        <li>Power relies on outside temperature and current inside temperature</li>    
+                    </ul>
+                    <h6>Lighting</h6>
+                    <ul>
+                        <li>There is a range of acceptable brightness</li>
+                        <li>For LED bulbs, brightness is linearly related to energy input</li>    
+                    </ul>
+                    <br>
+                    <h5>Binary Consumption</h5>
+                    <h6>Washer/Dryer</h6>
+                    <ul>
+                        <li>If the washer was on, it should stay on</li>
+                        <li>Should use cold/colder settings if possible</li>    
+                    </ul>
+                    <h6>Oven</h6>
+                    <ul>
+                        <li>If the oven was on, it should stay on</li>
+                    </ul>
+                    <h6>Dishwasher</h6>
+                    <ul>
+                        <li>If the dishwasher was on, it should stay on</li>
+                    </ul>
+                    <br>
+                    <br>
                 </div>
 
-                <br>
-                <br>
-                <h4 id="scrollspyHeading3">Solutions</h4>
+                <div style="text-align: left;">
+                    <h3 id="scrollspyHeading3">Proposed Solutions</h3>
+                    <br>
+                    <h4>Model Predictive Control using Mixed-integer linear programming</h4>
+                    <ul>
+                        <li>This is an Optimization problem: Maximize power output while minimizing cost to customer satisfaction</li>
+                        <li>The algorithm is linear in practice although it is expensive in theory</li>
+                        <li>There are not that many variables to optimize, and only a few are binary</li>
+                    </ul>
+                    <img src="images/optimization.png"/>
+                    <br>
+                    <br>
+                    <br>
+                    <h4>Load Shifting by Making Traditionally Binary Appliances Dispatchable</h4>
+                    <br>
+                    <h5>Rather than completely shutting off an appliance while load shifting (which may present consequences down the line), we propose making traditionally binary appliances into dispactable appliances
+                        that gradiently consume enery.</h5>
+                    <ul>
+                        <li>Lighting: Creating the ability to dim lights to a certain unnoticable change in brightness, or use occupancy learned data to control room brightness.</li>
+                        <li>Water Pump: Based on the capacity of hot water in the tank already, adjust heating hours based on occupany water usage data.</li>
+                        <li>HVAC: use temperature sensors to determine whether or not to preheat/precool the household, creating less urgent demand for the HVAC system to be running during peak hours.</li>
+                    </ul>
+
+                </div>
+                
             </div>
     </div>
 

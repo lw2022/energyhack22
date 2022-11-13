@@ -70,13 +70,13 @@ class StackedVis {
             .attr("dx", "-15em")
             .attr("y", 6)
             .attr("dy", "-2.5em")
-            .text("Energy Consumption (kWh)")
+            .text("Energy Consumption (Amps)")
             .attr("transform", "rotate(-90)")
             .attr("text-anchor", "start")
 
           // Add Y axis
         var y = d3.scaleLinear()
-            .domain([0,5])
+            .domain([0,200])
             .range([ vis.height, 0 ]);
         vis.svg.append("g")
             .call(d3.axisLeft(y).ticks(10))
