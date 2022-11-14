@@ -14,3 +14,8 @@
 - pip3 install numpy
 - flask run
 
+Team:
+Lisa Wang
+Carolyn Wang
+Cindy Tian
+Victor Qin
