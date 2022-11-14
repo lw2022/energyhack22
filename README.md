@@ -15,7 +15,7 @@
 - flask run
 
 Team:
-Lisa Wang
-Carolyn Wang
-Cindy Tian
+Lisa Wang, 
+Carolyn Wang, 
+Cindy Tian, 
 Victor Qin
